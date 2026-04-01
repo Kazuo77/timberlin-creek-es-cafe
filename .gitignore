@@ -13,6 +13,8 @@ dist-ssr
 *.local
 
 # Editor directories and files
+variable.clear.ps1
+variable.load.ps1
 .env
 .env.*
 .vscode/*
