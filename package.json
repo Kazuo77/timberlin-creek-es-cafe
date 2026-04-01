@@ -1,0 +1,46 @@
+{
+  "name": "otis-a-mason-es-cafetorium",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
+    "build:prod": "vite build --mode production",
+    "archive": "ch5-cli archive -p otis-a-mason-es-cafetorium -d dist -o archive",
+    "deploy:mobile": "ch5-cli deploy -p -H 0.0.0.0 -t mobile archive/otis-a-mason-es-cafetorium.ch5z",
+    "deploy:xpanel": " ch5-cli deploy -H 10.0.0.187 -t web archive/otis-a-mason-es-cafetorium.ch5z",
+    "deploy:panel": "ch5-cli deploy -p -H 0.0.0.0 -t touchscreen archive/otis-a-mason-es-cafetorium.ch5z --slow-mode",
+    "lint": "eslint . --ext .ts,.vue --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "buildos": "rimraf dist && npm run build && npm run archive && npm run deploy:xpanel"
+  },
+  "dependencies": {
+    "@crestron/ch5-crcomlib": "^2.11.2",
+    "@crestron/ch5-theme": "^2.11.2",
+    "@crestron/ch5-webxpanel": "^2.8.0",
+    "eruda": "^3.4.1",
+    "vue": "3.5.30",
+    "vue-router": "5.0.4"
+  },
+  "devDependencies": {
+    "@crestron/ch5-utilities-cli": "2.0.0",
+    "@types/node": "22.13.1",
+    "@vitejs/plugin-vue": "5.2.1",
+    "@vue/tsconfig": "0.7.0",
+    "rimraf": "^6.1.3",
+    "typescript": "5.7.2",
+    "vite": "6.1.0",
+    "vite-plugin-pwa": "0.21.1",
+    "vite-plugin-singlefile": "2.1.0",
+    "vite-plugin-static-copy": "2.2.0",
+    "vue-tsc": "2.2.0"
+  },
+  "overrides": {
+    "axios": "1.14.0"
+  },
+  "resolutions":{
+    "axios": "1.14.0"
+  }
+}
