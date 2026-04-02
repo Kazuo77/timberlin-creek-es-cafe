@@ -16,6 +16,9 @@ export default function useWebXPanel(params: WebXPanelConfig) {
       const { WebXPanel, isActive: active, WebXPanelEvents, WebXPanelConfigParams } = window.WebXPanel.getWebXPanel(!window.WebXPanel.runsInContainerApp());
       
       isActive.value = active;
+      if (window.CrComLib.isCrestronTouchscreen()) {
+        systemOnline.value = true;
+      }
       
       const config: Partial<typeof WebXPanelConfigParams> = params;
 

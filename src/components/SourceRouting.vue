@@ -251,7 +251,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 20px 24px;
+  padding: 16px 24px;
   background: #f0ede6;
   border-left: 3px solid #1a1a1a;
 }
@@ -261,7 +261,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  padding: 8px 12px;
+  padding: 20px 12px;
   background: transparent;
   border: 1px solid #ccc;
   color: #888;
@@ -280,7 +280,7 @@ export default defineComponent({
 }
 
 .expand-label {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -313,7 +313,10 @@ export default defineComponent({
 }
 
 .source-btn {
-  padding: 12px 28px;
+  padding: 25px 28px;
+  justify-content: center;
+  height: 80px; 
+  width: 170px;
   background: #fff;
   border: 1px solid #ddd;
   color: #555;

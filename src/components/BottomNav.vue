@@ -231,7 +231,7 @@ export default defineComponent({
 /* Bottom bar */
 .bottom-nav {
   width: 100%;
-  height: 64px;
+  height: 110px;
   background: #1a1a1a;
   display: flex;
   align-items: center;
@@ -249,8 +249,10 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 80px;
+  width: 150px;
   gap: 3px;
-  padding: 8px 20px;
   background: transparent;
   border: 1px solid transparent;
   color: #888;
@@ -294,8 +296,8 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   gap: 3px;
-  width: 48px;
-  height: 44px;
+  width: 100px;
+  height: 80px;
   background: transparent;
   border: 1px solid #333;
   color: #888;
@@ -311,7 +313,7 @@ export default defineComponent({
 }
 
 .mute-btn {
-  width: 72px;
+  width: 100px;
   border-color: #444;
   color: #f7f6f2;
 }
@@ -342,7 +344,9 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  padding: 8px 20px;
+  justify-content: center;
+  height: 80px;
+  width: 100px;
   background: transparent;
   border: 1px solid #5a1a1a;
   color: #c0504d;

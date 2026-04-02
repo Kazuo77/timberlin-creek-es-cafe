@@ -77,6 +77,18 @@ export const JOINS = {
     
     output1Visible: 'd_out1_visible',
     output2Visible: 'd_out2_visible',
+
+// CD Controls
+    cdOpenClose:     'd_cd_open_close',
+    cdPlayPause:     'd_cd_play_pause',
+    cdStop:          'd_cd_stop',
+    cdSearchBack:    'd_cd_search_back',
+    cdSearchFwd:     'd_cd_search_fwd',
+    cdDisplay:       'd_cd_display',
+    cdFolderBack:    'd_cd_folder_back',
+    cdFolderFwd:     'd_cd_folder_fwd',
+
+
   },
   
   analog: {
