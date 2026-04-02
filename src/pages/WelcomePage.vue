@@ -1,7 +1,7 @@
 <template>
   <div class="welcome-page">
     <div class="logo-section">
-      <img src="../assets/images/DCPS_Logo.png" class="logo-img" alt="DCPS Logo" />
+      <img src="../assets/images/sjcsd-logo.png" class="logo-img" alt="sjcsd Logo" />
     </div>
     <div class="welcome-content">
       <h1 class="room-name">Cafetorium</h1>
@@ -46,7 +46,7 @@ export default defineComponent({
       });
     });
 
-    const enter = () => pulse(JOINS.digital.mainPage);
+    const enter = () => pulse(JOINS.digital.startup);
 
     return { systemOnline, enter };
   }
@@ -57,7 +57,7 @@ export default defineComponent({
 .welcome-page {
   width: 1280px;
   height: 800px;
-  background: linear-gradient(135deg, #2651a1 0%, #1e4c91 40%, #1565c0 100%);
+  background: linear-gradient(135deg, #c8a855 0%, #d4bc6e 40%, #e8d48a 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,19 +74,8 @@ export default defineComponent({
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 70% 30%, rgba(21, 101, 192, 0.3) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 70% 30%, #8b6914 0%, transparent 60%);
   pointer-events: none;
-}
-
-/* Accent bar at top */
-.welcome-page::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: #1565c0;
 }
 
 /* Logo section — takes upper portion */
@@ -96,10 +85,11 @@ export default defineComponent({
   justify-content: center;
   flex: 1;
   z-index: 1;
+  padding-bottom: 16px;
 }
 
 .logo-img {
-  width: 650px;
+  width: 525px;
   height: auto;
 }
 
@@ -108,7 +98,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   z-index: 1;
 }
 
@@ -125,7 +115,7 @@ export default defineComponent({
   font-family: 'Courier New', monospace;
   font-size: 13px;
   letter-spacing: 0.25em;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255, 255, 255, 0.849);
   text-transform: uppercase;
   margin: 0;
 }
@@ -136,12 +126,12 @@ export default defineComponent({
   align-items: center;
   gap: 16px;
   padding: 18px 48px;
-  background: rgba(255,255,255,0.1);
+  background: #1b4164;
   color: #ffffff;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
   cursor: pointer;
   font-family: 'Courier New', monospace;
-  font-size: 14px;
+  font-size: 25px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   transition: background 0.2s, transform 0.1s;
@@ -149,7 +139,7 @@ export default defineComponent({
 }
 
 .start-btn:active {
-  background: rgba(255,255,255,0.2);
+  background: #0d1f3c;
   transform: scale(0.98);
 }
 
@@ -171,9 +161,9 @@ export default defineComponent({
   align-items: center;
   gap: 8px;
   font-family: 'Courier New', monospace;
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.15em;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255, 255, 255, 0.932);
   text-transform: uppercase;
 }
 

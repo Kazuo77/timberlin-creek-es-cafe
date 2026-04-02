@@ -1,6 +1,9 @@
 <template>
-  <div class="top-bar">
-    <div class="top-bar-left">
+  <div class="top-bar">    
+    <div class="top-bar-left">      
+      <div class="logo-section">
+        <img src="../assets/images/sjcsd-logo.png" class="logo-img" alt="sjcsd Logo" />
+      </div>
       <span class="room-label">Cafetorium</span>
     </div>
     <div class="top-bar-center">
@@ -52,6 +55,17 @@ export default defineComponent({
   box-sizing: border-box;
   flex-shrink: 0;
 }
+
+.logo-img {
+  width: 55px;
+  height: auto;
+}
+.top-bar-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 
 .room-label {
   font-family: 'Georgia', serif;

@@ -153,13 +153,11 @@ export default defineComponent({
         flashGauge();
       });
 
-      sub('b', JOINS.digital.shutdownFb, (value: boolean)  => {
+      sub('b', JOINS.digital.sysBusyFb, (value: boolean)  => {
         isShuttingDown.value = value;
       })
 
-      console.log('welcomePageFb join:', JOINS.digital.welcomePageFb);
         sub('b', JOINS.digital.welcomePageFb, (value: boolean) => {
-          console.log('welcomePageFb Join Fire');
           if (value) router.push('/');
         });
         

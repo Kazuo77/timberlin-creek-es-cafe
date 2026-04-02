@@ -2,7 +2,9 @@ export const JOINS = {
   digital: {
     shutdown:       '11',
     shutdownFb:     '11',
-    startupFb:      'd_system_startup_fb',
+    sysBusyFb:      '12',
+    startup:        '10',
+    startupFb:      '10',
     mainPage:       '2',
     mainPageFb:     '2',
     welcomePage:    '1',
@@ -46,7 +48,32 @@ export const JOINS = {
     
     micGlobalMute:  '50',
     micGlobalMuteFb:'50',
-    
+
+    // Display controls
+    disp1Power:      '81',
+    disp1PowerFb:    '81',
+    disp1Mute:       '82',
+    disp1MuteFb:     '82',
+    disp1VolUp:      '83',
+    disp1VolDown:    '84',
+    disp1Hdmi1:      '85',
+    disp1Hdmi1Fb:    '85',
+    disp1Hdmi2:      '86',
+    disp1Hdmi2Fb:    '86',
+    disp1HdcpErr:    '87',
+
+    disp2Power:      '91',
+    disp2PowerFb:    '91',
+    disp2Mute:       '92',
+    disp2MuteFb:     '92',
+    disp2VolUp:      '93',
+    disp2VolDown:    '94',
+    disp2Hdmi1:      '95',
+    disp2Hdmi1Fb:    '95',
+    disp2Hdmi2:      '96',
+    disp2Hdmi2Fb:    '96',
+    disp2HdcpErr:    '97',
+
     
     output1Visible: 'd_out1_visible',
     output2Visible: 'd_out2_visible',
