@@ -11,7 +11,7 @@
     "archive": "ch5-cli archive -p otis-a-mason-es-cafetorium -d dist -o archive",
     "deploy:mobile": "ch5-cli deploy -p -H 0.0.0.0 -t mobile archive/otis-a-mason-es-cafetorium.ch5z",
     "deploy:xpanel": " ch5-cli deploy -H 10.0.0.187 -t web archive/otis-a-mason-es-cafetorium.ch5z",
-    "deploy:panel": "ch5-cli deploy -p -H 10.0.0.221 -t touchscreen archive/otis-a-mason-es-cafetorium.ch5z --slow-mode",
+    "deploy:panel": "ch5-cli deploy -p -H 172.22.0.21 -t touchscreen archive/otis-a-mason-es-cafetorium.ch5z --slow-mode",
     "lint": "eslint . --ext .ts,.vue --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "buildos": "rimraf dist && npm run build && npm run archive && npm run deploy:xpanel"

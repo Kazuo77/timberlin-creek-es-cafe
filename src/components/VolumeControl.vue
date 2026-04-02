@@ -1,7 +1,6 @@
 <template>
   <div class="volume-control">
     <h2 class="section-title">Source Volume</h2>
-
     <div class="vol-grid">
       <div
         v-for="(source, index) in sources"
@@ -14,19 +13,14 @@
         </div>
 
         <div class="vol-body">
-          <!-- Vertical gauge -->
           <div class="gauge-wrap">
             <div class="gauge-track">
               <div class="gauge-fill" :style="{ height: Math.round((source.level / 65535) * 100) + '%' }"></div>
             </div>
             <span class="gauge-value">{{ Math.round((source.level / 65535) * 100) }}%</span>
           </div>
-
-          <!-- Controls -->
           <div class="vol-controls">
-            <button class="level-btn" @click="levelUp(index)">
-              <span>▲</span>
-            </button>
+            <button class="level-btn" @click="levelUp(index)"><span>▲</span></button>
             <button
               class="vol-mute-btn"
               :class="{ muted: source.muted }"
@@ -35,28 +29,99 @@
               <span class="mute-icon">{{ source.muted ? '✕' : '◎' }}</span>
               <span class="mute-label">{{ source.muted ? 'Muted' : 'Active' }}</span>
             </button>
-            <button class="level-btn" @click="levelDown(index)">
-              <span>▼</span>
-            </button>
+            <button class="level-btn" @click="levelDown(index)"><span>▼</span></button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- CD Player — Tascam CD-400U -->
+    <div class="cd-section">
+      <h2 class="section-title" style="margin-top: 32px;">CD Player</h2>
+
+      <!-- Track info -->
+      <div class="cd-track-info" v-if="cdTrackInfo">
+        <span class="cd-track-label">Now Playing</span>
+        <span class="cd-track-text">{{ cdTrackInfo }}</span>
+      </div>
+
+      <div class="cd-transport">
+
+        <!-- Source selection -->
+        <div class="cd-group">
+          <span class="cd-label">Source</span>
+          <div class="cd-btns">
+            <button class="cd-btn" :class="{ active: cdSrcCdFb }" @click="pulse(JOINS.digital.cdSrcCd)">CD</button>
+            <button class="cd-btn" :class="{ active: cdSrcBtFb }" @click="pulse(JOINS.digital.cdSrcBt)">BT</button>
+            <button class="cd-btn" :class="{ active: cdSrcAuxFb }" @click="pulse(JOINS.digital.cdSrcAux)">AUX</button>
+          </div>
+        </div>
+
+        <div class="cd-divider"></div>
+
+        <!-- Transport -->
+        <div class="cd-group">
+          <span class="cd-label">Transport</span>
+          <div class="cd-btns">
+            <button class="cd-btn" :class="{ active: cdPlayFb }" @click="pulse(JOINS.digital.cdPlay)">
+              <span class="cd-icon">▶</span>
+            </button>
+            <button class="cd-btn" :class="{ active: cdPauseFb }" @click="pulse(JOINS.digital.cdPause)">
+              <span class="cd-icon pause-icon">||</span>
+            </button>
+            <button class="cd-btn" :class="{ active: cdStopFb }" @click="pulse(JOINS.digital.cdStop)">
+              <span class="cd-icon">■</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="cd-divider"></div>
+
+        <!-- Search — hold behavior -->
+        <div class="cd-group">
+          <span class="cd-label">Search</span>
+          <div class="cd-btns">
+            <button
+              class="cd-btn"
+              :class="{ active: cdSearchRevFb }"
+              @pointerdown="hold(JOINS.digital.cdSearchRev, true)"
+              @pointerup="hold(JOINS.digital.cdSearchRev, false)"
+              @pointerleave="hold(JOINS.digital.cdSearchRev, false)"
+              @pointercancel="hold(JOINS.digital.cdSearchRev, false)"
+            >
+              <span class="cd-icon">⏮</span>
+            </button>
+            <button
+              class="cd-btn"
+              :class="{ active: cdSearchFwdFb }"
+              @pointerdown="hold(JOINS.digital.cdSearchFwd, true)"
+              @pointerup="hold(JOINS.digital.cdSearchFwd, false)"
+              @pointerleave="hold(JOINS.digital.cdSearchFwd, false)"
+              @pointercancel="hold(JOINS.digital.cdSearchFwd, false)"
+            >
+              <span class="cd-icon">⏭</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
+import { defineComponent, ref, reactive, onMounted, onUnmounted } from 'vue';
 import { JOINS } from '../joins';
-import { pulse } from '../useCrComLib';
+import { pulse, hold } from '../useCrComLib';
 
 const VOL_JOINS = {
-  mute:     [JOINS.digital.volMute,    JOINS.digital.cdMute   ],
-  muteFb:   [JOINS.digital.volMuteFb,  JOINS.digital.cdMuteFb ],
-  up:       [JOINS.digital.volUp,      JOINS.digital.cdUp     ],
-  down:     [JOINS.digital.volDown,    JOINS.digital.cdDown   ],
-  level:    [JOINS.analog.volGauge,    JOINS.analog.cdGauge   ],
-  label:    [JOINS.serial.vol1Label,   JOINS.serial.vol2Label ],
+  mute:   [JOINS.digital.volMute,   JOINS.digital.cdMute  ],
+  muteFb: [JOINS.digital.volMuteFb, JOINS.digital.cdMuteFb],
+  up:     [JOINS.digital.volUp,     JOINS.digital.cdUp    ],
+  down:   [JOINS.digital.volDown,   JOINS.digital.cdDown  ],
+  level:  [JOINS.analog.volGauge,   JOINS.analog.cdGauge  ],
+  label:  [JOINS.serial.vol1Label,  JOINS.serial.vol2Label],
 };
 
 export default defineComponent({
@@ -65,6 +130,17 @@ export default defineComponent({
     const sources = reactive(
       Array.from({ length: 2 }, () => ({ muted: false, label: '', level: 0 }))
     );
+
+    // CD transport feedback
+    const cdStopFb      = ref(false);
+    const cdPlayFb      = ref(false);
+    const cdPauseFb     = ref(false);
+    const cdSearchFwdFb = ref(false);
+    const cdSearchRevFb = ref(false);
+    const cdSrcCdFb     = ref(false);
+    const cdSrcBtFb     = ref(false);
+    const cdSrcAuxFb    = ref(false);
+    const cdTrackInfo   = ref('');
 
     const subs: Array<{ type: 'b' | 'n' | 's'; join: string; id: string }> = [];
     const sub = (type: 'b' | 'n' | 's', join: string, cb: (v: any) => void) => {
@@ -79,6 +155,17 @@ export default defineComponent({
         sub('s', VOL_JOINS.label[i],  (v: string)  => sources[i].label = v);
       });
 
+      // CD feedback
+      sub('b', JOINS.digital.cdStopFb,      (v: boolean) => cdStopFb.value      = v);
+      sub('b', JOINS.digital.cdPlayFb,      (v: boolean) => cdPlayFb.value      = v);
+      sub('b', JOINS.digital.cdPauseFb,     (v: boolean) => cdPauseFb.value     = v);
+      sub('b', JOINS.digital.cdSearchFwdFb, (v: boolean) => cdSearchFwdFb.value = v);
+      sub('b', JOINS.digital.cdSearchRevFb, (v: boolean) => cdSearchRevFb.value = v);
+      sub('b', JOINS.digital.cdSrcCdFb,     (v: boolean) => cdSrcCdFb.value     = v);
+      sub('b', JOINS.digital.cdSrcBtFb,     (v: boolean) => cdSrcBtFb.value     = v);
+      sub('b', JOINS.digital.cdSrcAuxFb,    (v: boolean) => cdSrcAuxFb.value    = v);
+      sub('s', JOINS.serial.cdTrackInfo,    (v: string)  => cdTrackInfo.value   = v);
+
       onUnmounted(() => {
         subs.forEach(({ type, join, id }) =>
           window.CrComLib.unsubscribeState(type, join, id)
@@ -90,7 +177,12 @@ export default defineComponent({
     const levelUp    = (index: number) => pulse(VOL_JOINS.up[index]);
     const levelDown  = (index: number) => pulse(VOL_JOINS.down[index]);
 
-    return { sources, toggleMute, levelUp, levelDown };
+    return {
+      JOINS, pulse, hold,
+      sources, toggleMute, levelUp, levelDown,
+      cdStopFb, cdPlayFb, cdPauseFb, cdSearchFwdFb, cdSearchRevFb,
+      cdSrcCdFb, cdSrcBtFb, cdSrcAuxFb, cdTrackInfo,
+    };
   }
 });
 </script>
@@ -157,7 +249,6 @@ export default defineComponent({
   height: 240px;
 }
 
-/* Vertical gauge */
 .gauge-wrap {
   display: flex;
   flex-direction: column;
@@ -189,7 +280,6 @@ export default defineComponent({
   letter-spacing: 0.05em;
 }
 
-/* Controls */
 .vol-controls {
   display: flex;
   flex-direction: column;
@@ -211,9 +301,7 @@ export default defineComponent({
   -webkit-tap-highlight-color: transparent;
 }
 
-.level-btn:active {
-  background: #eee;
-}
+.level-btn:active { background: #eee; }
 
 .vol-mute-btn {
   display: flex;
@@ -237,19 +325,112 @@ export default defineComponent({
   color: #fff;
 }
 
-.vol-mute-btn:active {
-  opacity: 0.7;
-}
+.vol-mute-btn:active { opacity: 0.7; }
 
-.mute-icon {
-  font-size: 16px;
-  line-height: 1;
-}
+.mute-icon { font-size: 16px; line-height: 1; }
 
 .mute-label {
   font-family: 'Courier New', monospace;
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+}
+
+/* CD Section */
+.cd-section { margin-top: 8px; }
+
+.cd-track-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: #1a1a1a;
+  color: #f7f6f2;
+  margin-bottom: 2px;
+}
+
+.cd-track-label {
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  flex-shrink: 0;
+}
+
+.cd-track-text {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #f7f6f2;
+}
+
+.cd-transport {
+  background: #f0ede6;
+  border: 1px solid #ddd;
+  border-left: 3px solid #1a1a1a;
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cd-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cd-label {
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.cd-btns {
+  display: flex;
+  gap: 4px;
+}
+
+.cd-btn {
+  padding: 25px 35px;
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #1a1a1a;
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 56px;
+  text-align: center;
+}
+
+.cd-btn.active {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  color: #f7f6f2;
+}
+
+.cd-btn:active:not(.active) { background: #eee; }
+
+.cd-icon { 
+  font-size: 18px; 
+  line-height: 1;
+}
+.pause-icon {
+  letter-spacing: -2px;
+  font-weight: bolder;
+  font-size: 21px;
+}
+
+.cd-divider {
+  width: 1px;
+  height: 48px;
+  background: #ccc;
+  align-self: flex-end;
 }
 </style>

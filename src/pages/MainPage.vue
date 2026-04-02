@@ -21,8 +21,8 @@ import BottomNav     from '../components/BottomNav.vue';
 import SourceRouting from '../components/SourceRouting.vue';
 import VolumeControl from '../components/VolumeControl.vue';
 import MicControl    from '../components/MicControl.vue';
-import { JOINS }     from '../joins';
-import { useRouter } from 'vue-router';
+//import { JOINS }     from '../joins';
+//import { useRouter } from 'vue-router';
 //import { webXPanelConfig } from '../webxpanel.config';
 
 

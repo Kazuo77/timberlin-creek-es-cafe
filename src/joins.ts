@@ -58,9 +58,9 @@ export const JOINS = {
     disp1VolDown:    '84',
     disp1Hdmi1:      '85',
     disp1Hdmi1Fb:    '85',
-    disp1Hdmi2:      '86',
-    disp1Hdmi2Fb:    '86',
     disp1HdcpErr:    '87',
+    disp1HDbaseT:    '88',
+    disp1HDbaseTFb:  '88',
 
     disp2Power:      '91',
     disp2PowerFb:    '91',
@@ -79,16 +79,24 @@ export const JOINS = {
     output2Visible: 'd_out2_visible',
 
 // CD Controls
-    cdOpenClose:     'd_cd_open_close',
-    cdPlayPause:     'd_cd_play_pause',
-    cdStop:          'd_cd_stop',
-    cdSearchBack:    'd_cd_search_back',
-    cdSearchFwd:     'd_cd_search_fwd',
-    cdDisplay:       'd_cd_display',
-    cdFolderBack:    'd_cd_folder_back',
-    cdFolderFwd:     'd_cd_folder_fwd',
+    cdStop:         '21',
+    cdPlay:         '22',
+    cdPause:        '23',
+    cdSearchFwd:    '24',
+    cdSearchRev:    '25',
+    cdSrcCd:        '26',
+    cdSrcBt:        '27',
+    cdSrcAux:       '28',
 
-
+    // Feedback
+    cdStopFb:       '21',
+    cdPlayFb:       '22',
+    cdPauseFb:      '23',
+    cdSearchFwdFb:  '24',
+    cdSearchRevFb:  '25',
+    cdSrcCdFb:      '26',
+    cdSrcBtFb:      '27',
+    cdSrcAuxFb:     '28',
   },
   
   analog: {
@@ -123,5 +131,8 @@ export const JOINS = {
     //volume page Labels
     vol1Label:       '31',
     vol2Label:       '32',
+
+    //CD Track Info
+    cdTrackInfo:      '20',
   }
 } as const;

@@ -73,8 +73,7 @@
           </button>
         </div>
         
-        <button class="shutdown-btn" @click="onShutdown">
-          <span class="shutdown-icon">⏻</span>
+        <button class="shutdown-btn" @click="onShutdown">          
           <span class="nav-label">Shutdown</span>
         </button>
       </div>
@@ -185,9 +184,9 @@ export default defineComponent({
 /* Gauge popup */
 .gauge-popup {
   position: absolute;
-  bottom: 68px;
-  right: 100px;
-  width: 260px;
+  bottom: 112px;
+  right: 170px;
+  width: 290px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -278,7 +277,7 @@ export default defineComponent({
 
 .nav-label {
   font-family: 'Courier New', monospace;
-  font-size: 10px;
+  font-size: 15px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -346,7 +345,7 @@ export default defineComponent({
   gap: 3px;
   justify-content: center;
   height: 80px;
-  width: 100px;
+  width: 150px;
   background: transparent;
   border: 1px solid #5a1a1a;
   color: #c0504d;
@@ -361,7 +360,7 @@ export default defineComponent({
 }
 
 .shutdown-icon {
-  font-size: 18px;
+  font-size: 24px;
   line-height: 1;
 }
 </style>

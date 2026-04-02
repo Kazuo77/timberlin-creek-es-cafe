@@ -57,8 +57,8 @@
             <div class="ctrl-group">
               <span class="ctrl-label">Input</span>
               <div class="ctrl-btns">
+                <button class="ctrl-btn" :class="{ active: disp1HDbaseTFb }" @click="pulse(JOINS.digital.disp1HDbaseT)">HDBaseT</button>
                 <button class="ctrl-btn" :class="{ active: disp1Hdmi1Fb }" @click="pulse(JOINS.digital.disp1Hdmi1)">HDMI 1</button>
-                <button class="ctrl-btn" :class="{ active: disp1Hdmi2Fb }" @click="pulse(JOINS.digital.disp1Hdmi2)">HDMI 2</button>
               </div>
             </div>
           </div>
@@ -96,7 +96,10 @@
         <!-- Display 2 controls -->
         <Transition name="expand">
           <div class="display-panel" v-if="disp2Open">
-            <div class="ctrl-group">
+            <div>
+               <span class="ctrl-label">No Controls Available</span>
+            </div>
+            <!--<div class="ctrl-group">
               <span class="ctrl-label">Power</span>
               <div class="ctrl-btns">
                 <button class="ctrl-btn" :class="{ on: disp2Power }" @click="pulse(JOINS.digital.disp2Power)">
@@ -122,7 +125,7 @@
                 <button class="ctrl-btn" :class="{ active: disp2Hdmi1Fb }" @click="pulse(JOINS.digital.disp2Hdmi1)">HDMI 1</button>
                 <button class="ctrl-btn" :class="{ active: disp2Hdmi2Fb }" @click="pulse(JOINS.digital.disp2Hdmi2)">HDMI 2</button>
               </div>
-            </div>
+            </div>-->
           </div>
         </Transition>
       </div>
@@ -151,7 +154,7 @@ export default defineComponent({
     const disp1Power   = ref(false);
     const disp1Mute    = ref(false);
     const disp1Hdmi1Fb = ref(false);
-    const disp1Hdmi2Fb = ref(false);
+    const disp1HDbaseTFb = ref(false);
 
     const disp2Power   = ref(false);
     const disp2Mute    = ref(false);
@@ -186,7 +189,7 @@ export default defineComponent({
       sub('b', JOINS.digital.disp1PowerFb,  (v: boolean) => { disp1Power.value   = v; });
       sub('b', JOINS.digital.disp1MuteFb,   (v: boolean) => { disp1Mute.value    = v; });
       sub('b', JOINS.digital.disp1Hdmi1Fb,  (v: boolean) => { disp1Hdmi1Fb.value = v; });
-      sub('b', JOINS.digital.disp1Hdmi2Fb,  (v: boolean) => { disp1Hdmi2Fb.value = v; });
+      sub('b', JOINS.digital.disp1HDbaseTFb,(v: boolean) => { disp1HDbaseTFb.value = v; });
 
       sub('b', JOINS.digital.disp2PowerFb,  (v: boolean) => { disp2Power.value   = v; });
       sub('b', JOINS.digital.disp2MuteFb,   (v: boolean) => { disp2Mute.value    = v; });
@@ -215,7 +218,7 @@ export default defineComponent({
       output1Visible, output2Visible,
       inputs, routeOutput1, routeOutput2,
       disp1Open, disp2Open,
-      disp1Power, disp1Mute, disp1Hdmi1Fb, disp1Hdmi2Fb,
+      disp1Power, disp1Mute, disp1Hdmi1Fb, disp1HDbaseTFb,
       disp2Power, disp2Mute, disp2Hdmi1Fb, disp2Hdmi2Fb,
       disp1HdcpErr, disp2HdcpErr,
     };
@@ -264,7 +267,7 @@ export default defineComponent({
   padding: 20px 12px;
   background: transparent;
   border: 1px solid #ccc;
-  color: #888;
+  color: #1a1a1a;
   font-family: 'Courier New', monospace;
   font-size: 12px;
   cursor: pointer;
@@ -302,7 +305,7 @@ export default defineComponent({
 
 .output-name {
   font-family: 'Georgia', serif;
-  font-size: 16px;
+  font-size: 20px;
   color: #1a1a1a;
 }
 
@@ -321,7 +324,7 @@ export default defineComponent({
   border: 1px solid #ddd;
   color: #555;
   font-family: 'Courier New', monospace;
-  font-size: 13px;
+  font-size: 18px;
   letter-spacing: 0.08em;
   cursor: pointer;
   transition: all 0.15s;
@@ -359,7 +362,7 @@ export default defineComponent({
 
 .ctrl-label {
   font-family: 'Courier New', monospace;
-  font-size: 9px;
+  font-size: 13px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #888;
@@ -371,12 +374,13 @@ export default defineComponent({
 }
 
 .ctrl-btn {
-  padding: 18px 28px;
+  height: 80px;
+  width: 120px;
   background: #fff;
   border: 1px solid #ddd;
   color: #555;
   font-family: 'Courier New', monospace;
-  font-size: 11px;
+  font-size: 18px;
   letter-spacing: 0.08em;
   cursor: pointer;
   transition: all 0.15s;

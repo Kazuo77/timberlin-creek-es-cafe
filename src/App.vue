@@ -13,3 +13,11 @@ export default defineComponent({
   }
 });
 </script>
+<style>
+html, body {
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+</style>
