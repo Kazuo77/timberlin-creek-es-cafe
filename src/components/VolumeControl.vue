@@ -5,8 +5,7 @@
       <div
         v-for="(source, index) in sources"
         :key="index"
-        class="vol-channel"
-      >
+        class="vol-channel">
         <div class="vol-header">
           <div class="vol-number">SRC {{ index + 1 }}</div>
           <div class="vol-name">{{ source.label || `Source ${index + 1}` }}</div>
@@ -24,8 +23,7 @@
             <button
               class="vol-mute-btn"
               :class="{ muted: source.muted }"
-              @click="toggleMute(index)"
-            >
+              @click="toggleMute(index)">
               <span class="mute-icon">{{ source.muted ? '✕' : '◎' }}</span>
               <span class="mute-label">{{ source.muted ? 'Muted' : 'Active' }}</span>
             </button>
@@ -33,8 +31,8 @@
           </div>
         </div>
       </div>
-          <CDTransportControl />
     </div>
+          <CDTransportControl/>
   </div>
 </template>
 
@@ -42,6 +40,7 @@
 import { defineComponent, ref, reactive, onMounted, onUnmounted } from 'vue';
 import { JOINS } from '../joins';
 import { pulse, hold } from '../useCrComLib';
+import CDTransportControl from './CDTransportControl.vue';
 
 const VOL_JOINS = {
   mute:   [JOINS.digital.volMute,   JOINS.digital.cdMute  ],
@@ -54,6 +53,7 @@ const VOL_JOINS = {
 
 export default defineComponent({
   name: 'VolumeControl',
+  components: { CDTransportControl  },
   setup() {
     const sources = reactive(
       Array.from({ length: 2 }, () => ({ muted: false, label: '', level: 0 }))
