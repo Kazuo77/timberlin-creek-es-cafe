@@ -1,6 +1,5 @@
 <template>
-  <Teleport to="body">
-    <div class="cd-section">
+  <div class="cd-section">
       <h2 class="section-title">CD Player</h2>
 
       <div class="cd-track-info" v-if="cdTrackInfo">
@@ -68,8 +67,7 @@
         </div>
 
       </div>
-    </div>
-  </Teleport>
+  </div>
 </template>
 
 <script lang="ts">
