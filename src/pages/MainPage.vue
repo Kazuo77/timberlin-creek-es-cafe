@@ -59,8 +59,8 @@ export default defineComponent({
 
 <style scoped>
 .main-page {
-  width: 1280px;
-  height: 800px;
+  width: 100vw;
+  height: 100vh;
   background: #f7f6f2;
   display: flex;
   flex-direction: column;
