@@ -55,8 +55,8 @@ export default defineComponent({
 
 <style scoped>
 .welcome-page {
-  width: 1280px;
-  height: 800px;
+  width: 100vw;
+  height: 100vh;
   background: linear-gradient(135deg, #c8a855 0%, #d4bc6e 40%, #e8d48a 100%);
   display: flex;
   flex-direction: column;

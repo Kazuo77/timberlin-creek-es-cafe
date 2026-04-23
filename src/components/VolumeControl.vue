@@ -32,7 +32,6 @@
         </div>
       </div>
     </div>
-          <CDTransportControl/>
   </div>
 </template>
 

@@ -32,10 +32,10 @@ export default defineComponent({
 <style scoped>
 /* Full screen overlay — blocks all touches behind the dialog */
 .overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  width: 1280px;
-  height: 800px;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.72);
   display: flex;
   align-items: center;

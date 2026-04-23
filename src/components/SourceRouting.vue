@@ -64,72 +64,6 @@
           </div>
         </Transition>
       </div>
-
-      <!-- Output 2 -->
-      <div v-show="output2Visible">
-        <div class="output-row">
-          <button class="expand-btn" :class="{ open: disp2Open }" @click="disp2Open = !disp2Open">
-            <span>{{ disp2Open ? '▴' : '▾' }}</span>
-            <span class="expand-label">Display Controls</span>
-          </button>
-          <div class="output-label">
-            <span class="output-number">OUT 2</span>
-            <span class="output-name">Display</span>
-          </div>
-          <div class="source-select">
-            <button
-              v-for="input in inputs"
-              :key="input.value"
-              class="source-btn"
-              :class="{ active: output2Source === input.value }"
-              @click="routeOutput2(input.value)"
-            >
-              {{ input.label }}
-            </button>
-          </div>
-          <div class="hdcp-error" v-if="disp2HdcpErr">
-            <span class="hdcp-icon">⚠</span>
-            <span class="hdcp-text">HDCP Error</span>
-          </div>
-        </div>
-
-        <!-- Display 2 controls -->
-        <Transition name="expand">
-          <div class="display-panel" v-if="disp2Open">
-            <div>
-               <span class="ctrl-label">No Controls Available</span>
-            </div>
-            <!--<div class="ctrl-group">
-              <span class="ctrl-label">Power</span>
-              <div class="ctrl-btns">
-                <button class="ctrl-btn" :class="{ on: disp2Power }" @click="pulse(JOINS.digital.disp2Power)">
-                  {{ disp2Power ? 'On' : 'Off' }}
-                </button>
-              </div>
-            </div>
-            <div class="ctrl-divider"></div>
-            <div class="ctrl-group">
-              <span class="ctrl-label">Volume</span>
-              <div class="ctrl-btns">
-                <button class="ctrl-btn" @click="pulse(JOINS.digital.disp2VolDown)">▼</button>
-                <button class="ctrl-btn" :class="{ muted: disp2Mute }" @click="pulse(JOINS.digital.disp2Mute)">
-                  {{ disp2Mute ? 'Muted' : 'Active' }}
-                </button>
-                <button class="ctrl-btn" @click="pulse(JOINS.digital.disp2VolUp)">▲</button>
-              </div>
-            </div>
-            <div class="ctrl-divider"></div>
-            <div class="ctrl-group">
-              <span class="ctrl-label">Input</span>
-              <div class="ctrl-btns">
-                <button class="ctrl-btn" :class="{ active: disp2Hdmi1Fb }" @click="pulse(JOINS.digital.disp2Hdmi1)">HDMI 1</button>
-                <button class="ctrl-btn" :class="{ active: disp2Hdmi2Fb }" @click="pulse(JOINS.digital.disp2Hdmi2)">HDMI 2</button>
-              </div>
-            </div>-->
-          </div>
-        </Transition>
-      </div>
-
     </div>
   </div>
 </template>
@@ -143,26 +77,18 @@ export default defineComponent({
   name: 'SourceRouting',
   setup() {
     const output1Source  = ref(0);
-    const output2Source  = ref(0);
     const output1Visible = ref(true);
-    const output2Visible = ref(true);
     const inputLabels    = ref(['', '', '', '']);
 
     const disp1Open = ref(false);
-    const disp2Open = ref(false);
 
     const disp1Power   = ref(false);
     const disp1Mute    = ref(false);
     const disp1Hdmi1Fb = ref(false);
     const disp1HDbaseTFb = ref(false);
 
-    const disp2Power   = ref(false);
-    const disp2Mute    = ref(false);
-    const disp2Hdmi1Fb = ref(false);
-    const disp2Hdmi2Fb = ref(false);
 
     const disp1HdcpErr = ref(false);
-    const disp2HdcpErr = ref(false);
 
     const inputs = computed<Array<{ value: number; label: string }>>(() => [
       { value: 1, label: inputLabels.value[0] || 'Input 1' },
@@ -179,7 +105,6 @@ export default defineComponent({
 
     onMounted(() => {
       sub('n', JOINS.analog.output1SourceFb, (v: number) => { output1Source.value = v; });
-      sub('n', JOINS.analog.output2SourceFb, (v: number) => { output2Source.value = v; });
 
       sub('s', JOINS.serial.input1Label, (v: string) => { inputLabels.value[0] = v; });
       sub('s', JOINS.serial.input2Label, (v: string) => { inputLabels.value[1] = v; });
@@ -191,13 +116,7 @@ export default defineComponent({
       sub('b', JOINS.digital.disp1Hdmi1Fb,  (v: boolean) => { disp1Hdmi1Fb.value = v; });
       sub('b', JOINS.digital.disp1HDbaseTFb,(v: boolean) => { disp1HDbaseTFb.value = v; });
 
-      sub('b', JOINS.digital.disp2PowerFb,  (v: boolean) => { disp2Power.value   = v; });
-      sub('b', JOINS.digital.disp2MuteFb,   (v: boolean) => { disp2Mute.value    = v; });
-      sub('b', JOINS.digital.disp2Hdmi1Fb,  (v: boolean) => { disp2Hdmi1Fb.value = v; });
-      sub('b', JOINS.digital.disp2Hdmi2Fb,  (v: boolean) => { disp2Hdmi2Fb.value = v; });
-
       sub('b', JOINS.digital.disp1HdcpErr, (v: boolean) => {disp1HdcpErr.value = v;})
-      sub('b', JOINS.digital.disp2HdcpErr, (v: boolean) => {disp2HdcpErr.value = v;})
 
       onUnmounted(() => {
         subs.forEach(({ type, join, id }) =>
@@ -209,18 +128,10 @@ export default defineComponent({
     const routeOutput1 = (inputValue: number) =>
       window.CrComLib.publishEvent('n', JOINS.analog.output1Source, inputValue);
 
-    const routeOutput2 = (inputValue: number) =>
-      window.CrComLib.publishEvent('n', JOINS.analog.output2Source, inputValue);
-
     return {
-      JOINS, pulse,
-      output1Source, output2Source,
-      output1Visible, output2Visible,
-      inputs, routeOutput1, routeOutput2,
-      disp1Open, disp2Open,
-      disp1Power, disp1Mute, disp1Hdmi1Fb, disp1HDbaseTFb,
-      disp2Power, disp2Mute, disp2Hdmi1Fb, disp2Hdmi2Fb,
-      disp1HdcpErr, disp2HdcpErr,
+      JOINS, pulse, inputs,
+      disp1Power, disp1Mute, disp1Hdmi1Fb, disp1HDbaseTFb,disp1HdcpErr,routeOutput1,output1Visible,output1Source,disp1Open
+      
     };
   }
 });

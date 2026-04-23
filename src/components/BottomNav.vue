@@ -363,4 +363,25 @@ export default defineComponent({
   font-size: 24px;
   line-height: 1;
 }
+
+@media (orientation: portrait) {
+  .bottom-nav {
+    height: 20vh;
+    flex-wrap: wrap;
+    align-content: center;
+    padding: 0 8px;
+    gap: 4px;
+  }
+
+  .nav-left {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .nav-right {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
 </style>

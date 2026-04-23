@@ -1,5 +1,5 @@
 <template>
-  <div class="mic-control">
+  <div class="mic-control" ref="scrollEl" @touchstart="onTouchStart" @touchmove="onTouchMove">
     <h2 class="section-title">Microphones</h2>
 
     <!-- Global mute -->
@@ -68,12 +68,12 @@ import { JOINS } from '../joins';
 import { pulse } from '../useCrComLib';
 
 const MIC_JOINS = {
-  mute:      [JOINS.digital.mic1Mute,      JOINS.digital.mic2Mute,      JOINS.digital.mic3Mute,      JOINS.digital.mic4Mute,      JOINS.digital.mic5Mute     ],
-  muteFb:    [JOINS.digital.mic1MuteFb,    JOINS.digital.mic2MuteFb,    JOINS.digital.mic3MuteFb,    JOINS.digital.mic4MuteFb,    JOINS.digital.mic5MuteFb   ],
-  levelUp:   [JOINS.digital.mic1LevelUp,   JOINS.digital.mic2LevelUp,   JOINS.digital.mic3LevelUp,   JOINS.digital.mic4LevelUp,   JOINS.digital.mic5LevelUp  ],
-  levelDown: [JOINS.digital.mic1LevelDown, JOINS.digital.mic2LevelDown, JOINS.digital.mic3LevelDown, JOINS.digital.mic4LevelDown, JOINS.digital.mic5LevelDown],
-  label:     [JOINS.serial.mic1Label,      JOINS.serial.mic2Label,      JOINS.serial.mic3Label,      JOINS.serial.mic4Label,      JOINS.serial.mic5Label     ],
-  level:     [JOINS.analog.mic1Level,      JOINS.analog.mic2Level,      JOINS.analog.mic3Level,      JOINS.analog.mic4Level,      JOINS.analog.mic5Level     ],
+  mute:      [JOINS.digital.mic1Mute,      JOINS.digital.mic2Mute,      JOINS.digital.mic3Mute,      JOINS.digital.mic4Mute,      JOINS.digital.mic5Mute      ,JOINS.digital.mic6Mute       ,JOINS.digital.mic7Mute       ,JOINS.digital.mic8Mute     ],
+  muteFb:    [JOINS.digital.mic1MuteFb,    JOINS.digital.mic2MuteFb,    JOINS.digital.mic3MuteFb,    JOINS.digital.mic4MuteFb,    JOINS.digital.mic5MuteFb    ,JOINS.digital.mic6MuteFb     ,JOINS.digital.mic7MuteFb     ,JOINS.digital.mic8MuteFb   ],
+  levelUp:   [JOINS.digital.mic1LevelUp,   JOINS.digital.mic2LevelUp,   JOINS.digital.mic3LevelUp,   JOINS.digital.mic4LevelUp,   JOINS.digital.mic5LevelUp   ,JOINS.digital.mic6LevelUp    ,JOINS.digital.mic7LevelUp    ,JOINS.digital.mic8LevelUp  ],
+  levelDown: [JOINS.digital.mic1LevelDown, JOINS.digital.mic2LevelDown, JOINS.digital.mic3LevelDown, JOINS.digital.mic4LevelDown, JOINS.digital.mic5LevelDown ,JOINS.digital.mic6LevelDown  ,JOINS.digital.mic7LevelDown  ,JOINS.digital.mic8LevelDown],
+  label:     [JOINS.serial.mic1Label,      JOINS.serial.mic2Label,      JOINS.serial.mic3Label,      JOINS.serial.mic4Label,      JOINS.serial.mic5Label      ,JOINS.serial.mic6Label       ,JOINS.serial.mic7Label       ,JOINS.serial.mic8Label     ],
+  level:     [JOINS.analog.mic1Level,      JOINS.analog.mic2Level,      JOINS.analog.mic3Level,      JOINS.analog.mic4Level,      JOINS.analog.mic5Level      ,JOINS.analog.mic6Level       ,JOINS.analog.mic7Level       ,JOINS.analog.mic8Level     ],
 };
   
 export default defineComponent({
@@ -82,7 +82,7 @@ export default defineComponent({
     const globalMuted = ref(false);
 
     const mics = reactive(
-      Array.from({ length: 5 }, () => ({ muted: false, label: '', level: 0 }))
+      Array.from({ length: 8 }, () => ({ muted: false, label: '', level: 0 }))
     );
 
     const subs: Array<{ type: 'b' | 'n' | 's'; join: string; id: string }> = [];
@@ -114,7 +114,26 @@ export default defineComponent({
     //TODO:
     //switch the lvlup lvldown pulse with a held function
 
-    return { globalMuted, mics, toggleGlobalMute, toggleMic, levelUp, levelDown };
+    const scrollEl = ref<HTMLElement | null>(null);
+    let touchStartY = 0;
+
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      e.stopPropagation();
+      const el = scrollEl.value;
+      if (!el) return;
+      const deltaY = touchStartY - e.touches[0].clientY;
+      const atTop    = el.scrollTop <= 0;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight;
+      if ((atTop && deltaY < 0) || (atBottom && deltaY > 0)) {
+        e.preventDefault();
+      }
+    };
+
+    return { globalMuted, mics, toggleGlobalMute, toggleMic, levelUp, levelDown, scrollEl, onTouchStart, onTouchMove };
   }
 });
 </script>

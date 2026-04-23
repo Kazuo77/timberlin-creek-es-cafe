@@ -2,7 +2,7 @@
   <div class="main-page">
     <TopBar :system-online="systemOnline" />
 
-    <div class="content">
+    <div class="content scrollable">
       <Transition name="fade" mode="out-in">
         <SourceRouting v-if="activeSection === 'routing'" key="routing" />
         <VolumeControl v-else-if="activeSection === 'volume'" key="volume" />
@@ -59,8 +59,8 @@ export default defineComponent({
 
 <style scoped>
 .main-page {
-  width: 1280px;
-  height: 800px;
+  width: 100vw;
+  height: 100vh;
   background: #f7f6f2;
   display: flex;
   flex-direction: column;
@@ -70,6 +70,7 @@ export default defineComponent({
 
 .content {
   flex: 1;
+  min-height: 0;
   overflow: hidden;
   position: relative;
 }
