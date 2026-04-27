@@ -1,5 +1,5 @@
 <template>
-  <div class="mic-control" ref="scrollEl" @touchstart="onTouchStart" @touchmove="onTouchMove">
+  <div class="mic-control" >
     <h2 class="section-title">Microphones</h2>
 
     <!-- Global mute -->
@@ -19,7 +19,7 @@
     </div>  
 
     <!-- Per channel -->
-    <div class="mic-grid">
+    <div class="mic-grid" ref="scrollEl" @touchstart="onTouchStart" @touchmove="onTouchMove">
       <div
         v-for="(mic, index) in mics"
         :key="index"
@@ -140,10 +140,11 @@ export default defineComponent({
 
 <style scoped>
 .mic-control {
+  display:flex;
+  flex-direction: column;
   padding: 24px 32px;
   height: 100%;
   box-sizing: border-box;
-  overflow-y: auto;
 }
 
 .section-title {
@@ -164,7 +165,6 @@ export default defineComponent({
   margin-bottom: 24px;
   padding: 16px 24px;
   background: #f0ede6;
-  border: 1px solid #ddd;
 }
 .global-info {
   display: flex;
@@ -237,6 +237,10 @@ export default defineComponent({
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  align-content: flex-start;
 }
 
 .mic-channel {
