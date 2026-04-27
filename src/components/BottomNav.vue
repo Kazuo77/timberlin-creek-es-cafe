@@ -34,14 +34,6 @@
         </button>
         <button
           class="nav-btn"
-          :class="{ active: activeSection === 'volume' }"
-          @click="$emit('section', 'volume')"
-        >
-          <span class="nav-icon">◈</span>
-          <span class="nav-label">Volume</span>
-        </button>
-        <button
-          class="nav-btn"
           :class="{ active: activeSection === 'mics' }"
           @click="$emit('section', 'mics')"
         >

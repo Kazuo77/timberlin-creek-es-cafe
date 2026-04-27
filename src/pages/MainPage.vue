@@ -5,7 +5,6 @@
     <div class="content">
       <Transition name="fade" mode="out-in">
         <SourceRouting v-if="activeSection === 'routing'" key="routing" />
-        <VolumeControl v-else-if="activeSection === 'volume'" key="volume" />
         <MicControl    v-else-if="activeSection === 'mics'"   key="mics" />
       </Transition>
     </div>
