@@ -1,5 +1,5 @@
 <template>
-  <div class="source-routing">
+  <div class="source-routing" ref="scrollEl" @touchstart="onTouchStart" @touchmove="onTouchMove">
     <h2 class="section-title">Source Routing</h2>
     <div class="outputs">
 
@@ -57,13 +57,18 @@
             <div class="ctrl-group">
               <span class="ctrl-label">Input</span>
               <div class="ctrl-btns">
-                <button class="ctrl-btn" :class="{ active: disp1HDbaseTFb }" @click="pulse(JOINS.digital.disp1HDbaseT)">HDBaseT</button>
                 <button class="ctrl-btn" :class="{ active: disp1Hdmi1Fb }" @click="pulse(JOINS.digital.disp1Hdmi1)">HDMI 1</button>
+                <button class="ctrl-btn" :class="{ active: disp1Hdmi2Fb }" @click="pulse(JOINS.digital.disp1Hdmi2)">HDMI 2</button>
               </div>
             </div>
           </div>
         </Transition>
       </div>
+      
+
+    </div>
+    <div class="transport-controls">
+      <BluRayControls/>
     </div>
   </div>
 </template>
@@ -71,29 +76,30 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onUnmounted } from 'vue';
 import { JOINS } from '../joins';
-import { pulse } from '../useCrComLib';
+import { pulse, hold } from '../useCrComLib';
+import BluRayControls from './BluRayControls.vue';
 
 export default defineComponent({
   name: 'SourceRouting',
+  components: { BluRayControls },
   setup() {
     const output1Source  = ref(0);
     const output1Visible = ref(true);
     const inputLabels    = ref(['', '', '', '']);
 
     const disp1Open = ref(false);
-
     const disp1Power   = ref(false);
     const disp1Mute    = ref(false);
     const disp1Hdmi1Fb = ref(false);
-    const disp1HDbaseTFb = ref(false);
+    const disp1Hdmi2Fb = ref(false);
 
 
     const disp1HdcpErr = ref(false);
 
     const inputs = computed<Array<{ value: number; label: string }>>(() => [
-      { value: 1, label: inputLabels.value[0] || 'Input 1' },
-      { value: 2, label: inputLabels.value[1] || 'Input 2' },
-      { value: 3, label: inputLabels.value[2] || 'Input 3' },
+      { value: 1, label: inputLabels.value[0] || 'Wall HDMI' },
+      { value: 2, label: inputLabels.value[1] || 'Blu-Ray' },
+      { value: 3, label: inputLabels.value[2] || 'Rack HDMI' },
       { value: 4, label: inputLabels.value[3] || 'Input 4' },
     ]);
 
@@ -114,7 +120,7 @@ export default defineComponent({
       sub('b', JOINS.digital.disp1PowerFb,  (v: boolean) => { disp1Power.value   = v; });
       sub('b', JOINS.digital.disp1MuteFb,   (v: boolean) => { disp1Mute.value    = v; });
       sub('b', JOINS.digital.disp1Hdmi1Fb,  (v: boolean) => { disp1Hdmi1Fb.value = v; });
-      sub('b', JOINS.digital.disp1HDbaseTFb,(v: boolean) => { disp1HDbaseTFb.value = v; });
+      sub('b', JOINS.digital.disp1Hdmi2Fb,(v: boolean) => { disp1Hdmi2Fb.value = v; });
 
       sub('b', JOINS.digital.disp1HdcpErr, (v: boolean) => {disp1HdcpErr.value = v;})
 
@@ -128,10 +134,32 @@ export default defineComponent({
     const routeOutput1 = (inputValue: number) =>
       window.CrComLib.publishEvent('n', JOINS.analog.output1Source, inputValue);
 
+      //scrolling
+    const scrollEl = ref<HTMLElement | null>(null);
+    let touchStartY = 0;
+
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      e.stopPropagation();
+      const el = scrollEl.value;
+      if (!el) return;
+      const deltaY = touchStartY - e.touches[0].clientY;
+      const atTop    = el.scrollTop <= 0;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight;
+      if ((atTop && deltaY < 0) || (atBottom && deltaY > 0)) {
+        e.preventDefault();
+      }
+    };
+
+
+
     return {
       JOINS, pulse, inputs,
-      disp1Power, disp1Mute, disp1Hdmi1Fb, disp1HDbaseTFb,disp1HdcpErr,routeOutput1,output1Visible,output1Source,disp1Open
-      
+      disp1Power, disp1Mute, disp1Hdmi1Fb, disp1Hdmi2Fb,disp1HdcpErr,routeOutput1,output1Visible,output1Source,disp1Open,
+      scrollEl, onTouchStart, onTouchMove
     };
   }
 });
@@ -143,6 +171,8 @@ export default defineComponent({
   height: 100%;
   box-sizing: border-box;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .section-title {
@@ -159,6 +189,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 16px;
+  flex: 1;
 }
 
 .output-row {
@@ -352,5 +383,10 @@ export default defineComponent({
 
 .hdcp-icon {
   font-size: 14px;
+}
+
+.transport-controls {
+  display: flex;
+  align-items: flex-end;
 }
 </style>

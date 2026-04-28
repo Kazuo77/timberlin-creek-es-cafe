@@ -1,6 +1,6 @@
 <template>
     <div class="cd-section">
-      <h2 class="section-title">CD Player</h2>
+      <h2 class="section-title">Blu-Ray</h2>
 
       <div class="cd-track-info" v-if="cdTrackInfo">
         <span class="cd-track-label">Now Playing</span>

@@ -45,36 +45,53 @@ export const JOINS = {
     mic5LevelDown:  '64',
     mic5Mute:       '65',
     mic5MuteFb:     '65',
-    
-    micGlobalMute:  '50',
+   
+    mic6LevelUp:    '66',
+    mic6LevelDown:  '67',
+    mic6Mute:       '68',
+    mic6MuteFb:     '69',
+
+    mic7LevelUp:    '70',
+    mic7LevelDown:  '71',
+    mic7Mute:       '72',
+    mic7MuteFb:     '72',
+
+    mic8LevelUp:    '73',
+    mic8LevelDown:  '74',
+    mic8Mute:       '75',
+    mic8MuteFb:     '75',
+  
+    mic9LevelUp:    '76',
+    mic9LevelDown:  '77',
+    mic9Mute:       '78',
+    mic9MuteFb:     '78',
+  
+    mic10LevelUp:    '79',
+    mic10LevelDown:  '80',
+    mic10Mute:       '81',
+    mic10MuteFb:     '81',
+   
+    mic11LevelUp:    '82',
+    mic11LevelDown:  '83',
+    mic11Mute:       '84',
+    mic11MuteFb:     '84',
+
+    micGlobalMute:  '49',
     micGlobalMuteFb:'50',
 
     // Display controls
-    disp1Power:      '81',
-    disp1PowerFb:    '81',
-    disp1Mute:       '82',
-    disp1MuteFb:     '82',
-    disp1VolUp:      '83',
-    disp1VolDown:    '84',
-    disp1Hdmi1:      '85',
-    disp1Hdmi1Fb:    '85',
-    disp1HdcpErr:    '87',
-    disp1HDbaseT:    '88',
-    disp1HDbaseTFb:  '88',
+    disp1Power:      '121',
+    disp1PowerFb:    '121',
+    disp1Mute:       '122',
+    disp1MuteFb:     '122',
+    disp1VolUp:      '123',
+    disp1VolDown:    '124',
+    disp1Hdmi1:      '125',
+    disp1Hdmi1Fb:    '125',
+    disp1HDbaseT:    '127',
+    disp1HDbaseTFb:  '127',
+    disp1HdcpErr:    '130',
 
-    disp2Power:      '91',
-    disp2PowerFb:    '91',
-    disp2Mute:       '92',
-    disp2MuteFb:     '92',
-    disp2VolUp:      '93',
-    disp2VolDown:    '94',
-    disp2Hdmi1:      '95',
-    disp2Hdmi1Fb:    '95',
-    disp2Hdmi2:      '96',
-    disp2Hdmi2Fb:    '96',
-    disp2HdcpErr:    '97',
-
-    
     output1Visible: 'd_out1_visible',
     output2Visible: 'd_out2_visible',
 
@@ -100,19 +117,22 @@ export const JOINS = {
   },
   
   analog: {
-    volGauge:       '30',
-    cdGauge:        '31',
     mic1Level:      '51',
     mic2Level:      '52',
     mic3Level:      '53',
     mic4Level:      '54',
-    mic5Level:      '55',
+    mic5Level:      '56',
+    mic6Level:      '57',
+    mic7Level:      '58',
+    mic8Level:      '59',
+    mic9Level:      '60',
+    mic10Level:      '61',
+    mic11Level:      '62',
+    mic12Level:      '63',
 
     //Video Outputs
     output1Source:  '1',
-    output2Source:  '2',
     output1SourceFb:'1',
-    output2SourceFb:'2',
   },
   
   serial: {
@@ -127,10 +147,16 @@ export const JOINS = {
     mic3Label:      '53',
     mic4Label:      '54',
     mic5Label:      '55',
+    mic6Label:      '56',
+    mic7Label:      '57',
+    mic8Label:      '58',
+    mic9Label:      '59',
+    mic10Label:      '60',
+    mic11Label:      '61',
+    mic12Label:      '62',
 
     //volume page Labels
-    vol1Label:       '31',
-    vol2Label:       '32',
+    //volume page removed for timberlin
 
     //CD Track Info
     cdTrackInfo:      '20',

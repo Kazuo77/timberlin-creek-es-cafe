@@ -23,6 +23,7 @@
       <div
         v-for="(mic, index) in mics"
         :key="index"
+        v-show="!hiddenMics.includes(index + 1)"
         class="mic-channel"
       >
         <div class="mic-header">
@@ -68,12 +69,12 @@ import { JOINS } from '../joins';
 import { pulse } from '../useCrComLib';
 
 const MIC_JOINS = {
-  mute:      [JOINS.digital.mic1Mute,      JOINS.digital.mic2Mute,      JOINS.digital.mic3Mute,      JOINS.digital.mic4Mute,      JOINS.digital.mic5Mute      ,JOINS.digital.mic6Mute       ,JOINS.digital.mic7Mute       ,JOINS.digital.mic8Mute       ,JOINS.digital.mic9Mute       ,JOINS.digital.mic10Mute        ,JOINS.digital.mic11Mute],
-  muteFb:    [JOINS.digital.mic1MuteFb,    JOINS.digital.mic2MuteFb,    JOINS.digital.mic3MuteFb,    JOINS.digital.mic4MuteFb,    JOINS.digital.mic5MuteFb    ,JOINS.digital.mic6MuteFb     ,JOINS.digital.mic7MuteFb     ,JOINS.digital.mic8MuteFb     ,JOINS.digital.mic9MuteFb     ,JOINS.digital.mic9MuteFb       ,JOINS.digital.mic11MuteFb],
-  levelUp:   [JOINS.digital.mic1LevelUp,   JOINS.digital.mic2LevelUp,   JOINS.digital.mic3LevelUp,   JOINS.digital.mic4LevelUp,   JOINS.digital.mic5LevelUp   ,JOINS.digital.mic6LevelUp    ,JOINS.digital.mic7LevelUp    ,JOINS.digital.mic8LevelUp    ,JOINS.digital.mic9LevelUp    ,JOINS.digital.mic10LevelUp     ,JOINS.digital.mic11LevelUp],
-  levelDown: [JOINS.digital.mic1LevelDown, JOINS.digital.mic2LevelDown, JOINS.digital.mic3LevelDown, JOINS.digital.mic4LevelDown, JOINS.digital.mic5LevelDown ,JOINS.digital.mic6LevelDown  ,JOINS.digital.mic7LevelDown  ,JOINS.digital.mic8LevelDown  ,JOINS.digital.mic9LevelDown  ,JOINS.digital.mic10LevelDown   ,JOINS.digital.mic11LevelDown],
-  label:     [JOINS.serial.mic1Label,      JOINS.serial.mic2Label,      JOINS.serial.mic3Label,      JOINS.serial.mic4Label,      JOINS.serial.mic5Label      ,JOINS.serial.mic6Label       ,JOINS.serial.mic7Label       ,JOINS.serial.mic8Label       ,JOINS.serial.mic9Label       ,JOINS.serial.mic10Label        ,JOINS.serial.mic11Label],
-  level:     [JOINS.analog.mic1Level,      JOINS.analog.mic2Level,      JOINS.analog.mic3Level,      JOINS.analog.mic4Level,      JOINS.analog.mic5Level      ,JOINS.analog.mic6Level       ,JOINS.analog.mic7Level       ,JOINS.analog.mic8Level       ,JOINS.analog.mic9Level       ,JOINS.analog.mic10Level        ,JOINS.analog.mic11Level ],
+  mute:      [JOINS.digital.mic1Mute,      JOINS.digital.mic2Mute,      JOINS.digital.mic3Mute,      JOINS.digital.mic4Mute,      JOINS.digital.mic5Mute      ,JOINS.digital.mic6Mute       ,JOINS.digital.mic7Mute       ,JOINS.digital.mic8Mute       ,JOINS.digital.mic9Mute       ,JOINS.digital.mic10Mute        ,JOINS.digital.mic11Mute        ,JOINS.digital.mic12Mute],
+  muteFb:    [JOINS.digital.mic1MuteFb,    JOINS.digital.mic2MuteFb,    JOINS.digital.mic3MuteFb,    JOINS.digital.mic4MuteFb,    JOINS.digital.mic5MuteFb    ,JOINS.digital.mic6MuteFb     ,JOINS.digital.mic7MuteFb     ,JOINS.digital.mic8MuteFb     ,JOINS.digital.mic9MuteFb     ,JOINS.digital.mic9MuteFb       ,JOINS.digital.mic11MuteFb      ,JOINS.digital.mic12MuteFb ],
+  levelUp:   [JOINS.digital.mic1LevelUp,   JOINS.digital.mic2LevelUp,   JOINS.digital.mic3LevelUp,   JOINS.digital.mic4LevelUp,   JOINS.digital.mic5LevelUp   ,JOINS.digital.mic6LevelUp    ,JOINS.digital.mic7LevelUp    ,JOINS.digital.mic8LevelUp    ,JOINS.digital.mic9LevelUp    ,JOINS.digital.mic10LevelUp     ,JOINS.digital.mic11LevelUp     ,JOINS.digital.mic12LevelUp],
+  levelDown: [JOINS.digital.mic1LevelDown, JOINS.digital.mic2LevelDown, JOINS.digital.mic3LevelDown, JOINS.digital.mic4LevelDown, JOINS.digital.mic5LevelDown ,JOINS.digital.mic6LevelDown  ,JOINS.digital.mic7LevelDown  ,JOINS.digital.mic8LevelDown  ,JOINS.digital.mic9LevelDown  ,JOINS.digital.mic10LevelDown   ,JOINS.digital.mic11LevelDown   ,JOINS.digital.mic12LevelDown],
+  label:     [JOINS.serial.mic1Label,      JOINS.serial.mic2Label,      JOINS.serial.mic3Label,      JOINS.serial.mic4Label,      JOINS.serial.mic5Label      ,JOINS.serial.mic6Label       ,JOINS.serial.mic7Label       ,JOINS.serial.mic8Label       ,JOINS.serial.mic9Label       ,JOINS.serial.mic10Label        ,JOINS.serial.mic11Label        ,JOINS.serial.mic12Label],
+  level:     [JOINS.analog.mic1Level,      JOINS.analog.mic2Level,      JOINS.analog.mic3Level,      JOINS.analog.mic4Level,      JOINS.analog.mic5Level      ,JOINS.analog.mic6Level       ,JOINS.analog.mic7Level       ,JOINS.analog.mic8Level       ,JOINS.analog.mic9Level       ,JOINS.analog.mic10Level        ,JOINS.analog.mic11Level        ,JOINS.analog.mic12Level ],
 };
   
 export default defineComponent({
@@ -81,8 +82,10 @@ export default defineComponent({
   setup() {
     const globalMuted = ref(false);
 
+    const hiddenMics = [11];
+
     const mics = reactive(
-      Array.from({ length: 11 }, () => ({ muted: false, label: '', level: 0 }))
+      Array.from({ length: 12 }, () => ({ muted: false, label: '', level: 0 }))
     );
 
     const subs: Array<{ type: 'b' | 'n' | 's'; join: string; id: string }> = [];
@@ -133,7 +136,7 @@ export default defineComponent({
       }
     };
 
-    return { globalMuted, mics, toggleGlobalMute, toggleMic, levelUp, levelDown, scrollEl, onTouchStart, onTouchMove };
+    return { globalMuted, mics, toggleGlobalMute, toggleMic, levelUp, levelDown, scrollEl, onTouchStart, onTouchMove, hiddenMics };
   }
 });
 </script>
