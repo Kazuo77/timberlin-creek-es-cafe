@@ -42,7 +42,13 @@
 
           <!-- Controls -->
           <div class="mic-controls">
-            <button class="level-btn" @click="levelUp(index)">
+            <button class="level-btn"
+                    @click="levelUp(index)"
+                @pointerdown="hold(MIC_JOINS.levelUp[index], true)"
+                @pointerup="hold(MIC_JOINS.levelUp[index], false)" 
+                @pointerleave="hold(MIC_JOINS.levelUp[index], false)" 
+                @pointercancel="hold(MIC_JOINS.levelUp[index], false)"
+              >
               <span>▲</span>
             </button>
             <button
@@ -53,7 +59,13 @@
               <span class="mute-icon">{{ mic.muted ? '✕' : '◎' }}</span>
               <span class="mute-label">{{ mic.muted ? 'Muted' : 'Active' }}</span>
             </button>
-            <button class="level-btn" @click="levelDown(index)">
+            <button class="level-btn" 
+                 @click="levelDown(index)"
+                @pointerdown="hold(MIC_JOINS.levelDown[index], true)"
+                @pointerup="hold(MIC_JOINS.levelDown[index], false)" 
+                @pointerleave="hold(MIC_JOINS.levelDown[index], false)" 
+                @pointercancel="hold(MIC_JOINS.levelDown[index], false)"
+                    >
               <span>▼</span>
             </button>
           </div>
@@ -66,11 +78,11 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted, onUnmounted } from 'vue';
 import { JOINS } from '../joins';
-import { pulse } from '../useCrComLib';
+import { pulse, hold } from '../useCrComLib';
 
 const MIC_JOINS = {
   mute:      [JOINS.digital.mic1Mute,      JOINS.digital.mic2Mute,      JOINS.digital.mic3Mute,      JOINS.digital.mic4Mute,      JOINS.digital.mic5Mute      ,JOINS.digital.mic6Mute       ,JOINS.digital.mic7Mute       ,JOINS.digital.mic8Mute       ,JOINS.digital.mic9Mute       ,JOINS.digital.mic10Mute        ,JOINS.digital.mic11Mute        ,JOINS.digital.mic12Mute],
-  muteFb:    [JOINS.digital.mic1MuteFb,    JOINS.digital.mic2MuteFb,    JOINS.digital.mic3MuteFb,    JOINS.digital.mic4MuteFb,    JOINS.digital.mic5MuteFb    ,JOINS.digital.mic6MuteFb     ,JOINS.digital.mic7MuteFb     ,JOINS.digital.mic8MuteFb     ,JOINS.digital.mic9MuteFb     ,JOINS.digital.mic9MuteFb       ,JOINS.digital.mic11MuteFb      ,JOINS.digital.mic12MuteFb ],
+  muteFb:    [JOINS.digital.mic1MuteFb,    JOINS.digital.mic2MuteFb,    JOINS.digital.mic3MuteFb,    JOINS.digital.mic4MuteFb,    JOINS.digital.mic5MuteFb    ,JOINS.digital.mic6MuteFb     ,JOINS.digital.mic7MuteFb     ,JOINS.digital.mic8MuteFb     ,JOINS.digital.mic9MuteFb     ,JOINS.digital.mic10MuteFb       ,JOINS.digital.mic11MuteFb      ,JOINS.digital.mic12MuteFb ],
   levelUp:   [JOINS.digital.mic1LevelUp,   JOINS.digital.mic2LevelUp,   JOINS.digital.mic3LevelUp,   JOINS.digital.mic4LevelUp,   JOINS.digital.mic5LevelUp   ,JOINS.digital.mic6LevelUp    ,JOINS.digital.mic7LevelUp    ,JOINS.digital.mic8LevelUp    ,JOINS.digital.mic9LevelUp    ,JOINS.digital.mic10LevelUp     ,JOINS.digital.mic11LevelUp     ,JOINS.digital.mic12LevelUp],
   levelDown: [JOINS.digital.mic1LevelDown, JOINS.digital.mic2LevelDown, JOINS.digital.mic3LevelDown, JOINS.digital.mic4LevelDown, JOINS.digital.mic5LevelDown ,JOINS.digital.mic6LevelDown  ,JOINS.digital.mic7LevelDown  ,JOINS.digital.mic8LevelDown  ,JOINS.digital.mic9LevelDown  ,JOINS.digital.mic10LevelDown   ,JOINS.digital.mic11LevelDown   ,JOINS.digital.mic12LevelDown],
   label:     [JOINS.serial.mic1Label,      JOINS.serial.mic2Label,      JOINS.serial.mic3Label,      JOINS.serial.mic4Label,      JOINS.serial.mic5Label      ,JOINS.serial.mic6Label       ,JOINS.serial.mic7Label       ,JOINS.serial.mic8Label       ,JOINS.serial.mic9Label       ,JOINS.serial.mic10Label        ,JOINS.serial.mic11Label        ,JOINS.serial.mic12Label],
@@ -136,7 +148,7 @@ export default defineComponent({
       }
     };
 
-    return { globalMuted, mics, toggleGlobalMute, toggleMic, levelUp, levelDown, scrollEl, onTouchStart, onTouchMove, hiddenMics };
+    return { hold, globalMuted, mics, toggleGlobalMute, toggleMic, levelUp, levelDown, scrollEl, onTouchStart, onTouchMove, hiddenMics, MIC_JOINS };
   }
 });
 </script>

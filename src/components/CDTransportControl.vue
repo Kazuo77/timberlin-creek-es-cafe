@@ -70,8 +70,7 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
+<script lang="ts"> import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
 import { JOINS } from '../joins';
 import { pulse, hold } from '../useCrComLib';
 
