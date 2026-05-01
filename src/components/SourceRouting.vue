@@ -178,6 +178,7 @@ export default defineComponent({
 .section-title {
   font-family: 'Courier New', monospace;
   font-size: 15px;
+  text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.4);
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #aaa;
@@ -212,6 +213,7 @@ export default defineComponent({
   color: #1a1a1a;
   font-family: 'Courier New', monospace;
   font-size: 12px;
+  text-shadow: 4px 5px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: all 0.15s;
   -webkit-tap-highlight-color: transparent;
@@ -226,6 +228,7 @@ export default defineComponent({
 
 .expand-label {
   font-size: 12px;
+  text-shadow: 4px 5px 5px rgba(0, 0, 0, 0.2);
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -234,6 +237,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 4px;
+  text-shadow: 4px 5px 5px rgba(0, 0, 0, 0.2);
   min-width: 80px;
 }
 
@@ -267,6 +271,7 @@ export default defineComponent({
   color: #555;
   font-family: 'Courier New', monospace;
   font-size: 18px;
+  text-shadow: 4px 7px 7px rgba(0, 0, 0, 0.5);
   letter-spacing: 0.08em;
   cursor: pointer;
   transition: all 0.15s;
@@ -305,6 +310,7 @@ export default defineComponent({
 .ctrl-label {
   font-family: 'Courier New', monospace;
   font-size: 13px;
+  text-shadow: 4px 5px 5px rgba(0, 0, 0, 0.2);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #888;

@@ -167,6 +167,7 @@ export default defineComponent({
 .section-title {
   font-family: 'Courier New', monospace;
   font-size: 15px;
+  text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.4);
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #aaa;
@@ -230,6 +231,7 @@ export default defineComponent({
 .global-label {
   font-family: 'Georgia', serif;
   font-size: 16px;
+  text-shadow: 4px 5px 5px rgba(0, 0, 0, 0.2);
   color: #1a1a1a;
 }
 
@@ -239,7 +241,8 @@ export default defineComponent({
 
 .global-action {
   font-family: 'Courier New', monospace;
-  font-size: 10px;
+  font-size: 12px;
+  text-shadow: 4px 5px 5px rgba(0, 0, 0, 0.2);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #aaa;
@@ -267,7 +270,7 @@ export default defineComponent({
   padding: 14px 12px;
   background: #f0ede6;
   border: 1px solid #ddd;
-  min-width: 140px;
+  min-width: 150px;
 }
 
 .mic-header {
@@ -287,6 +290,7 @@ export default defineComponent({
 .mic-name {
   font-family: 'Georgia', serif;
   font-size: 17px;
+  text-shadow: 4px 5px 5px rgba(0, 0, 0, 0.2);
   color: #1a1a1a;
   min-height: 20px;
 }
@@ -308,8 +312,8 @@ export default defineComponent({
 }
 
 .gauge-track {
-  width: 14px;
-  flex: 1;               /* fill remaining space after gauge-value label */
+  width: 25px;
+  flex: 1;               /* fill remaining vertical space after gauge-value label */
   background: #e0ddd6;
   border: 1px solid #ccc;
   display: flex;
@@ -325,7 +329,8 @@ export default defineComponent({
 
 .gauge-value {
   font-family: 'Courier New', monospace;
-  font-size: 14px;
+  font-size: 14px;      /*Changing font size on gauge affets button volume button sizes, it shares the fixed  */
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
   color: #aaa;
   letter-spacing: 0.05em;
 }
@@ -359,11 +364,11 @@ export default defineComponent({
 
 .mic-mute-btn {
   display: flex;
-  flex: 1;
   flex-direction: column;
   align-items: center;
   gap: 3px;
   width: 100%;
+  flex: 1;
   padding: 10px 0;
   background: #fff;
   border: 1px solid #4caf50;
