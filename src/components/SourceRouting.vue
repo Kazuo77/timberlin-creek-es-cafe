@@ -1,5 +1,5 @@
 <template>
-  <div class="source-routing" ref="scrollEl" @touchstart="onTouchStart" @touchmove="onTouchMove">
+  <div class="source-routing" ref="scrollEl" @touchstart.passive="onTouchStart" @touchmove="onTouchMove">
     <h2 class="section-title">Source Routing</h2>
     <div class="outputs">
 
@@ -149,7 +149,7 @@ export default defineComponent({
       const deltaY = touchStartY - e.touches[0].clientY;
       const atTop    = el.scrollTop <= 0;
       const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight;
-      if ((atTop && deltaY < 0) || (atBottom && deltaY > 0)) {
+      if (e.cancelable && ((atTop && deltaY < 0) || (atBottom && deltaY > 0))) {
         e.preventDefault();
       }
     };
@@ -177,7 +177,7 @@ export default defineComponent({
 
 .section-title {
   font-family: 'Courier New', monospace;
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #aaa;
@@ -239,7 +239,7 @@ export default defineComponent({
 
 .output-number {
   font-family: 'Courier New', monospace;
-  font-size: 10px;
+  font-size: 15px;
   letter-spacing: 0.2em;
   color: #aaa;
   text-transform: uppercase;

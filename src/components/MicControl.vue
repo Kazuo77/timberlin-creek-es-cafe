@@ -13,13 +13,13 @@
         :class="{ muted: globalMuted }"
         @click="toggleGlobalMute"
       >
-        <span class="global-icon">{{ globalMuted ? '✕' : '' }}</span>
+        <span class="global-icon">{{ globalMuted ? '' : '' }}</span>
         <span class="global-btn-label">{{ globalMuted ? 'Unmute All' : 'Mute All' }}</span>
       </button>
     </div>  
 
     <!-- Per channel -->
-    <div class="mic-grid" ref="scrollEl" @touchstart="onTouchStart" @touchmove="onTouchMove">
+    <div class="mic-grid" ref="scrollEl" @touchstart.passive="onTouchStart">
       <div
         v-for="(mic, index) in mics"
         :key="index"
@@ -107,6 +107,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      scrollEl.value?.addEventListener('touchmove', onTouchMove, { passive: false });
       sub('b', JOINS.digital.micGlobalMuteFb, (v: boolean) => globalMuted.value = v);
 
       mics.forEach((_, i) => {
@@ -116,6 +117,7 @@ export default defineComponent({
       });
 
       onUnmounted(() => {
+        scrollEl.value?.removeEventListener('touchmove', onTouchMove);
         subs.forEach(({ type, join, id }) =>
           window.CrComLib.unsubscribeState(type, join, id)
         );
@@ -143,7 +145,7 @@ export default defineComponent({
       const deltaY = touchStartY - e.touches[0].clientY;
       const atTop    = el.scrollTop <= 0;
       const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight;
-      if ((atTop && deltaY < 0) || (atBottom && deltaY > 0)) {
+      if (e.cancelable && ((atTop && deltaY < 0) || (atBottom && deltaY > 0))) {
         e.preventDefault();
       }
     };
@@ -164,7 +166,7 @@ export default defineComponent({
 
 .section-title {
   font-family: 'Courier New', monospace;
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #aaa;
@@ -215,7 +217,7 @@ export default defineComponent({
 
 .global-btn-label {
   font-family: 'Courier New', monospace;
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -276,7 +278,7 @@ export default defineComponent({
 
 .mic-number {
   font-family: 'Courier New', monospace;
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 0.2em;
   color: #aaa;
   text-transform: uppercase;
@@ -284,7 +286,7 @@ export default defineComponent({
 
 .mic-name {
   font-family: 'Georgia', serif;
-  font-size: 14px;
+  font-size: 17px;
   color: #1a1a1a;
   min-height: 20px;
 }
@@ -323,7 +325,7 @@ export default defineComponent({
 
 .gauge-value {
   font-family: 'Courier New', monospace;
-  font-size: 9px;
+  font-size: 14px;
   color: #aaa;
   letter-spacing: 0.05em;
 }
@@ -345,7 +347,7 @@ export default defineComponent({
   background: #fff;
   border: 1px solid #ddd;
   color: #555;
-  font-size: 13px;
+  font-size: 24px;
   cursor: pointer;
   transition: all 0.15s;
   -webkit-tap-highlight-color: transparent;
@@ -382,13 +384,13 @@ export default defineComponent({
 }
 
 .mute-icon {
-  font-size: 16px;
+  font-size: 24px;
   line-height: 1;
 }
 
 .mute-label {
   font-family: 'Courier New', monospace;
-  font-size: 9px;
+  font-size: 13px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
