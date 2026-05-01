@@ -99,8 +99,8 @@ export default defineComponent({
     const inputs = computed<Array<{ value: number; label: string }>>(() => [
       { value: 1, label: inputLabels.value[0] || 'Wall HDMI' },
       { value: 2, label: inputLabels.value[1] || 'Blu-Ray' },
-      { value: 3, label: inputLabels.value[2] || 'Rack HDMI' },
-      { value: 4, label: inputLabels.value[3] || 'Input 4' },
+      { value: 3, label: inputLabels.value[2] || 'Rack HDMI 1' },
+      { value: 4, label: inputLabels.value[3] || 'Rack HDMI 2' },
     ]);
 
     const subs: Array<{ type: 'b' | 'n' | 's'; join: string; id: string }> = [];

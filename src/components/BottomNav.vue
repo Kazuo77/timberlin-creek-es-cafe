@@ -58,7 +58,7 @@
             @mouseleave="gaugeVisible = false"
           >
             <span class="vol-icon">{{ isMuted ? '✕' : '✕' }}</span>
-            <span class="nav-label">{{ isMuted ? 'Muted' : 'Mute' }}</span>
+            <span class="nav-label">{{ isMuted ? 'Muted' : 'Global Mute' }}</span>
           </button>
           <button class="vol-btn" @click="volUp">
             <span class="vol-icon">+</span>
@@ -139,7 +139,7 @@ export default defineComponent({
     // sub and subs handle subscriptions onMounted and onUnmounted
     onMounted(() => {
       sub('b', JOINS.digital.volMuteFb, (v: boolean) => isMuted.value = v);
-      sub('n', JOINS.analog.volGauge,    (v: number)  => {
+      sub('n', JOINS.analog.mic9Level,    (v: number)  => {
         volLevel.value = v;
         flashGauge();
       });

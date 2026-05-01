@@ -76,8 +76,6 @@ export const JOINS = {
     mic12Mute:       '86',
     mic12MuteFb:     '86',
 
-
-
     micGlobalMute:  '50',
     micGlobalMuteFb:'50',
 
@@ -190,11 +188,6 @@ export const JOINS = {
     brRes1080iFb:           '277',
     brRes1080pFb:           '278',
     brRes2160pFb:           '279',
-
-
-
-    
-        
 
   },
   
