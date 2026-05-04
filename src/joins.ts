@@ -90,9 +90,10 @@ export const JOINS = {
     disp1Hdmi1Fb:    '105',
     disp1Hdmi2:      '106',
     disp1Hdmi2Fb:    '106',
-
     disp1HDbaseT:    '107',
     disp1HDbaseTFb:  '107',
+    disp1VideoMute:  '108',
+    disp1VideoMuteFb:'108',
     disp1HdcpErr:    '100',
 
     output1Visible: 'd_out1_visible',

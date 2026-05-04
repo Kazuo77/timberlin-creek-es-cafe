@@ -59,6 +59,7 @@
               <div class="ctrl-btns">
                 <button class="ctrl-btn" :class="{ active: disp1Hdmi1Fb }" @click="pulse(JOINS.digital.disp1Hdmi1)">HDMI 1</button>
                 <button class="ctrl-btn" :class="{ active: disp1Hdmi2Fb }" @click="pulse(JOINS.digital.disp1Hdmi2)">HDMI 2</button>
+                <button class="ctrl-btn" :class="{ active: disp1HdbtFb }" @click="pulse(JOINS.digital.disp1HDbaseT)">HDbaseT</button>
               </div>
             </div>
           </div>
@@ -92,6 +93,7 @@ export default defineComponent({
     const disp1Mute    = ref(false);
     const disp1Hdmi1Fb = ref(false);
     const disp1Hdmi2Fb = ref(false);
+    const disp1HDbaseTFb = ref(false);
 
 
     const disp1HdcpErr = ref(false);
@@ -120,7 +122,8 @@ export default defineComponent({
       sub('b', JOINS.digital.disp1PowerFb,  (v: boolean) => { disp1Power.value   = v; });
       sub('b', JOINS.digital.disp1MuteFb,   (v: boolean) => { disp1Mute.value    = v; });
       sub('b', JOINS.digital.disp1Hdmi1Fb,  (v: boolean) => { disp1Hdmi1Fb.value = v; });
-      sub('b', JOINS.digital.disp1Hdmi2Fb,(v: boolean) => { disp1Hdmi2Fb.value = v; });
+      sub('b', JOINS.digital.disp1Hdmi2Fb,  (v: boolean) => { disp1Hdmi2Fb.value = v; });
+      sub('b', JOINS.digital.disp1HDbaseTFb,(v: boolean) => { disp1HDbaseTFb.value = v; });
 
       sub('b', JOINS.digital.disp1HdcpErr, (v: boolean) => {disp1HdcpErr.value = v;})
 
