@@ -47,9 +47,6 @@
               <span class="ctrl-label">Volume</span>
               <div class="ctrl-btns">
                 <button class="ctrl-btn" @click="pulse(JOINS.digital.disp1VolDown)">▼</button>
-                <button class="ctrl-btn" :class="{ muted: disp1Mute }" @click="pulse(JOINS.digital.disp1Mute)">
-                  {{ disp1Mute ? 'Muted' : 'Active' }}
-                </button>
                 <button class="ctrl-btn" @click="pulse(JOINS.digital.disp1VolUp)">▲</button>
               </div>
             </div>
@@ -59,7 +56,7 @@
               <div class="ctrl-btns">
                 <button class="ctrl-btn" :class="{ active: disp1Hdmi1Fb }" @click="pulse(JOINS.digital.disp1Hdmi1)">HDMI 1</button>
                 <button class="ctrl-btn" :class="{ active: disp1Hdmi2Fb }" @click="pulse(JOINS.digital.disp1Hdmi2)">HDMI 2</button>
-                <button class="ctrl-btn" :class="{ active: disp1HdbtFb }" @click="pulse(JOINS.digital.disp1HDbaseT)">HDbaseT</button>
+                <button class="ctrl-btn" :class="{ active: disp1HDbaseTFb }" @click="pulse(JOINS.digital.disp1HDbaseT)">HDbaseT</button>
               </div>
             </div>
           </div>
@@ -161,7 +158,7 @@ export default defineComponent({
 
     return {
       JOINS, pulse, inputs,
-      disp1Power, disp1Mute, disp1Hdmi1Fb, disp1Hdmi2Fb,disp1HdcpErr,routeOutput1,output1Visible,output1Source,disp1Open,
+      disp1Power, disp1Mute, disp1Hdmi1Fb, disp1Hdmi2Fb, disp1HDbaseTFb, disp1HdcpErr, routeOutput1, output1Visible, output1Source, disp1Open,
       scrollEl, onTouchStart, onTouchMove
     };
   }

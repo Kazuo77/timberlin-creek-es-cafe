@@ -31,8 +31,8 @@
       <div class="blu-ray-group">
         <span class="blu-ray-label">Chapter</span>
         <div class="blu-ray-btns">
-          <button class="blu-ray-btn" @click="pulse(JOINS.digital.brChapterSkipRev)">⏮</button>
-          <button class="blu-ray-btn" @click="pulse(JOINS.digital.brChapterSkipFwd)">⏭</button>
+          <button class="blu-ray-btn" @click="pulse(JOINS.digital.brChapterSkipRev)"> << </button>
+          <button class="blu-ray-btn" @click="pulse(JOINS.digital.brChapterSkipFwd)"> >> </button>
         </div>
       </div>
 
@@ -78,8 +78,8 @@
       <div class="blu-ray-group">
         <span class="blu-ray-label">Title</span>
         <div class="blu-ray-btns">
-          <button class="blu-ray-btn" @click="pulse(JOINS.digital.brTitleSkipRev)">⏮</button>
-          <button class="blu-ray-btn" @click="pulse(JOINS.digital.brTitleSkipFwd)">⏭</button>
+          <button class="blu-ray-btn" @click="pulse(JOINS.digital.brTitleSkipRev)"><<</button>
+          <button class="blu-ray-btn" @click="pulse(JOINS.digital.brTitleSkipFwd)">>></button>
         </div>
       </div>
 
@@ -89,20 +89,22 @@
       <div class="blu-ray-group">
         <span class="blu-ray-label">Disc</span>
         <div class="blu-ray-btns">
-          <button class="blu-ray-btn" :class="{ active: brTrayOpenFb }" @click="pulse(JOINS.digital.brTrayOpen)">Open</button>
-          <button class="blu-ray-btn" :class="{ active: brTrayClosedFb }" @click="pulse(JOINS.digital.brTrayClose)">Close</button>
+          <button class="blu-ray-btn" :class="{ active: brTrayOpenFb }" @click="pulse(JOINS.digital.brDiscTrayOpen)">Open</button>
+          <button class="blu-ray-btn" :class="{ active: brTrayClosedFb }" @click="pulse(JOINS.digital.brDiscTrayClose)">Close</button>
         </div>
       </div>
 
       <div class="blu-ray-divider"></div>
-
-      <div class="blu-ray-menus">
-            <button class="blu-ray-btn blu-ray-menu" @click="pulse(JOINS.digital.brHomeMenu)">⌂</button>
-            <button class="blu-ray-btn blu-ray-menu" @click="pulse(JOINS.digital.brSetupMenu)">⚙</button>
-            <button class="blu-ray-btn blu-ray-menu" @click="pulse(JOINS.digital.brTopMenu)">☰</button>
-            <button class="blu-ray-btn blu-ray-menu" @click="pulse(JOINS.digital.brOptionMenu)">⋮</button>
-            <button class="blu-ray-btn blu-ray-menu" @click="pulse(JOINS.digital.brPopupMenu)">⧉</button>
-        </div>
+      <div class="blu-ray-group">
+        <span class="blu-ray-label">Menus</span>
+        <div class="blu-ray-menus">
+              <button class="blu-ray-btn blu-ray-menu" @click="pulse(JOINS.digital.brHomeMenu)">⌂</button>
+              <button class="blu-ray-btn blu-ray-menu blu-ray-no-icon" @click="pulse(JOINS.digital.brSetupMenu)">Set</button>
+              <button class="blu-ray-btn blu-ray-menu blu-ray-no-icon" @click="pulse(JOINS.digital.brTopMenu)">Top</button>
+              <button class="blu-ray-btn blu-ray-menu blu-ray-no-icon" @click="pulse(JOINS.digital.brOptionMenu)">Opt</button>
+              <button class="blu-ray-btn blu-ray-menu" @click="pulse(JOINS.digital.brPopupMenu)">⋮</button>
+          </div>
+      </div>
       <div class="blu-ray-divider"></div>
 
       <!-- D-Pad -->
@@ -432,8 +434,8 @@ export default defineComponent({
 }
 
 .blu-ray-dpad .blu-ray-btn {
-  width: 72px;
-  height: 72px;
+  width: 92px;
+  height: 92px;
   padding: 0;
   min-width: unset;
   display: flex;
@@ -460,5 +462,8 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.blu-ray-no-icon{
+  font-size: 20px;
 }
 </style>
